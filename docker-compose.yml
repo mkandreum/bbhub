@@ -16,9 +16,18 @@ services:
       GEMINI_MODEL: ${GEMINI_MODEL:-gemini-flash-latest}
       WEATHER_CITY: ${WEATHER_CITY:-Madrid}
       NEWS_FEEDS: ${NEWS_FEEDS:-}
+      TG_API_ID: ${TG_API_ID:-}
+      TG_API_HASH: ${TG_API_HASH:-}
+      MAIL_USER: ${MAIL_USER:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+      MAIL_IMAP_HOST: ${MAIL_IMAP_HOST:-imap.gmail.com}
+      MAIL_IMAP_PORT: ${MAIL_IMAP_PORT:-993}
+      MAIL_SMTP_HOST: ${MAIL_SMTP_HOST:-smtp.gmail.com}
+      MAIL_SMTP_PORT: ${MAIL_SMTP_PORT:-465}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-}
       TZ: ${TZ:-Europe/Madrid}
     volumes:
-      # Sesión de WhatsApp y chats: sin este volumen habría que escanear el QR en cada despliegue.
+      # Sesión de Telegram, notas, favoritos de radio e historial de Gemini.
       - bbhub_data:/data
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/api/health || exit 1"]

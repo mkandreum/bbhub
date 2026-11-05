@@ -14,6 +14,7 @@ export const feeds = (process.env.NEWS_FEEDS || DEFAULT_FEEDS).split(',').map((s
 }).filter((f) => f.url);
 
 const cache = new Map();
+export const peek = (key) => cache.get(key)?.v;
 async function cached(key, ttlMs, fn) {
   const hit = cache.get(key);
   if (hit && Date.now() - hit.t < ttlMs) return hit.v;

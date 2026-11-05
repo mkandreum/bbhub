@@ -23,7 +23,7 @@ function privateIp(ip) {
   return v === '::1' || v === '::' || v.startsWith('fc') || v.startsWith('fd') || v.startsWith('fe80');
 }
 
-async function assertPublic(u) {
+export async function assertPublic(u) {
   if (!/^https?:$/.test(u.protocol)) throw new Error('Solo se admiten enlaces http y https');
   const host = u.hostname.replace(/^\[|\]$/g, '');
   const addrs = net.isIP(host) ? [{ address: host }] : await dns.lookup(host, { all: true });
@@ -173,4 +173,10 @@ export async function search(q) {
     });
   }
   return out;
+}
+
+// HTML de terceros (p. ej. correos) a HTML ligero y seguro. Sin imágenes por defecto (píxeles de rastreo).
+export function lightHtml(html, { images = false, base = 'https://localhost/' } = {}) {
+  const { document } = parseHTML(String(html || ''));
+  return render(document.body || document.documentElement, base, { images });
 }
